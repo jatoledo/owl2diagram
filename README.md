@@ -18,13 +18,13 @@
 
 Submit the ontology URL.
 
-![image-20220315200056708](C:\Users\jhon\AppData\Roaming\Typora\typora-user-images\image-20220315200056708.png)
+![](images\image1.png)
 
 
 
 Result:
 
-![image-20220315200138525](C:\Users\jhon\AppData\Roaming\Typora\typora-user-images\image-20220315200138525.png)
+![](images\image2.png)
 
 ## Version
 
