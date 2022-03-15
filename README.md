@@ -16,7 +16,7 @@
 
 ## Example
 
-Submit the ontology URL.
+Submit ontology URL.
 
 ![](https://raw.githubusercontent.com/jatoledo/owl2diagram/main/images/image1.png)
 
