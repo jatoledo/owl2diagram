@@ -18,13 +18,13 @@
 
 Submit the ontology URL.
 
-![](images\image1.png)
+![](https://raw.githubusercontent.com/jatoledo/owl2diagram/main/images/image1.png)
 
 
 
 Result:
 
-![](images\image2.png)
+![](https://raw.githubusercontent.com/jatoledo/owl2diagram/main/images/image2.png)
 
 ## Version
 
