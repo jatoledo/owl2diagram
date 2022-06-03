@@ -1,6 +1,9 @@
 # Owl2diagram
 
-
+## How to run locally
+```
+python 
+```
 
 ## How to use
 
@@ -19,8 +22,6 @@
 Submit ontology URL.
 
 ![](https://raw.githubusercontent.com/jatoledo/owl2diagram/main/images/image1.png)
-
-
 
 Result:
 

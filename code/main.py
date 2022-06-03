@@ -1,12 +1,13 @@
 import rdflib
 from jinja2 import Template
-from code.query import class_query, hierarchy_query, dataProp_query, objectProp_query
-from code.uml import class_, hierarchyClass, dataProperties, objectProperties
+from query import class_query, hierarchy_query, dataProp_query, objectProp_query
+from uml import class_, hierarchyClass, dataProperties, objectProperties
 import os
 class_template = Template(class_)
 hierarchyClass_template = Template(hierarchyClass)
 dataProperties_template = Template(dataProperties)
 objectProperties_template = Template(objectProperties)
+
 
 def get_name(url):
     a = url.find('#')
