@@ -1,6 +1,6 @@
+```mermaid
+	classDiagram
 
-    ```mermaid
-    classDiagram
     
     class Feature {
     
@@ -85,5 +85,4 @@ Alojamiento  --> Concept   :categoria
      
     } 
     
-    ```
-    
+```

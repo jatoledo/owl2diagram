@@ -85,6 +85,23 @@ def get_object_diagram(data):
     return objectProp
 
 
+def save_diagram(diagram, output_path):
+    """
+    :param diagram:
+    :return:
+    """
+    output = "```mermaid\n"
+    output += "\tclassDiagram\n"
+    output += diagram
+    output += "\n```"
+    # classDiagram''' + diagram + '''
+    # ```''')
+    print(output)
+    f = open(output_path, 'w')
+    f.write(output)
+    f.close()
+
+
 def workflow(ontology_path, output_path):
     g = rdflib.Graph()
     # g.parse('core.owl', format="xml")
@@ -94,16 +111,8 @@ def workflow(ontology_path, output_path):
     hierarchy_diagram = get_class_hierarchy_diagram(get_class_hierarchy(g))
     object_diagram = get_object_diagram(get_object_prop(g))
     data_diagram = get_data_diagram(get_data_prop(g))
+    save_diagram(class_diagram + hierarchy_diagram + object_diagram + data_diagram, output_path)
 
-    output = ('''
-    ```mermaid
-    classDiagram''' +class_diagram + hierarchy_diagram + object_diagram + data_diagram + '''
-    ```
-    ''')
-    print(output)
-    f = open(output_path, 'w')
-    f.write(output)
-    f.close()
 
     # f = open("diagram.txt", "w")
     # # skinparam linetype ortho\n
