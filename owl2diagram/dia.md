@@ -73,7 +73,7 @@
     Alojamiento <|-- Albergue 
     
 
-Alojamiento  --> Concept   :categoria  
+    Alojamiento  --> Concept   :categoria  
 
     
     class Alojamiento  {
