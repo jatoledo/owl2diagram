@@ -1,3 +1,5 @@
+import sys
+
 import rdflib
 from jinja2 import Template
 from query import class_query, hierarchy_query, dataProp_query, objectProp_query
@@ -16,58 +18,110 @@ def get_name(url):
     else:
         return url.split("/")[-1]
 
-g = rdflib.Graph()
-#g.parse('core.owl', format="xml")
-file='core2.owl'
-g.parse(file, format=rdflib.util.guess_format(file))
+# g = rdflib.Graph()
+# #g.parse('core.owl', format="xml")
+# file = 'core2.owl'
+# g.parse(file, format=rdflib.util.guess_format(file))
+#
 
-# Get Class
-l = []
-for r in g.query(class_query):
-    l.append(get_name(r["class"]))
 
-class_diagram = class_template.render(elements=l)
-# get hierarchy class
-data = {}
-for r in g.query(hierarchy_query):
-    data[get_name(r["subClass"])] = get_name(r["superClass"])
+def get_classes(g):
+    # Get Class
+    l = []
+    for r in g.query(class_query):
+        l.append(get_name(r["class"]))
+    return l
 
-hierarchyClass = hierarchyClass_template.render(elements=data)
-print(hierarchyClass)
+
+def get_class_diagram(classes):
+    class_diagram = class_template.render(elements=classes)
+    return class_diagram
+
+
+def get_class_hierarchy(g):
+    # get hierarchy class
+    data = {}
+    for r in g.query(hierarchy_query):
+        data[get_name(r["subClass"])] = get_name(r["superClass"])
+    return data
+
+
+def get_class_hierarchy_diagram(data):
+    hierarchyClass = hierarchyClass_template.render(elements=data)
+    return hierarchyClass
+
+#
+# hierarchyClass = get_class_hierarchy(g)
+# print(hierarchyClass)
+
+# data = get_class_hierarchy(g)
+# hierarchyClass = hierarchyClass_template.render(elements=data)
+# print(hierarchyClass)
+
 
 # get dataProp
-csvDicData_ = dict()
-for r in g.query(dataProp_query):
-    csvDicData_.setdefault(get_name(r["class"]), []).append(get_name( r["prop"]))
+def get_data_prop(g):
+    csvDicData_ = dict()
+    for r in g.query(dataProp_query):
+        csvDicData_.setdefault(get_name(r["class"]), []).append(get_name( r["prop"]))
+    return csvDicData_
 
-dataProperties = dataProperties_template.render(elements=csvDicData_)
-
-
-# get Object Prop
-objectProp = dict()
-for r in g.query(objectProp_query):
-    objectProp.setdefault(get_name(r["prop"]), []).append(get_name(r["domain"]))
-    objectProp.setdefault(get_name(r["prop"]), []).append(get_name(r["range"]))
+def get_data_diagram(data):
+    dataProperties = dataProperties_template.render(elements=data)
+    return dataProperties
 
 
-# print(objectProp)
-objectProp = objectProperties_template.render(elements=objectProp)
+def get_object_prop(g):
+    # get Object Prop
+    objectProp = dict()
+    for r in g.query(objectProp_query):
+        objectProp.setdefault(get_name(r["prop"]), []).append(get_name(r["domain"]))
+        objectProp.setdefault(get_name(r["prop"]), []).append(get_name(r["range"]))
+    return objectProp
 
 
-f = open("diagram.txt", "w")
-# skinparam linetype ortho\n
-f.write("@startuml\n" + class_diagram + hierarchyClass + dataProperties + objectProp + "\n@enduml")
-f.close()
-#os.system('java -jar plantuml.jar  -tsvg webapp/static/assets/img/diagram.txt')
+def get_object_diagram(data):
+    objectProp = objectProperties_template.render(elements=data)
+    return objectProp
 
 
+def workflow(ontology_path, output_path):
+    g = rdflib.Graph()
+    # g.parse('core.owl', format="xml")
+    # file = 'core2.owl'
+    g.parse(ontology_path, format=rdflib.util.guess_format(ontology_path))
+    class_diagram = get_class_diagram(get_classes(g))
+    hierarchy_diagram = get_class_hierarchy_diagram(get_class_hierarchy(g))
+    object_diagram = get_object_diagram(get_object_prop(g))
+    data_diagram = get_data_diagram(get_data_prop(g))
 
-output = ('''
-```mermaid
-classDiagram''' +dataProperties+'''
-```
-''')
-print(output)
-f = open("diagram4.md", "w")
-f.write(output)
-f.close()
+    output = ('''
+    ```mermaid
+    classDiagram''' +class_diagram + hierarchy_diagram + object_diagram + data_diagram + '''
+    ```
+    ''')
+    print(output)
+    f = open(output_path, 'w')
+    f.write(output)
+    f.close()
+
+    # f = open("diagram.txt", "w")
+    # # skinparam linetype ortho\n
+    # f.write("@startuml\n" + class_diagram + hierarchyClass + dataProperties + objectProp + "\n@enduml")
+    # f.close()
+    # #os.system('java -jar plantuml.jar  -tsvg webapp/static/assets/img/diagram.txt')
+    #
+    #
+    #
+    # output = ('''
+    # ```mermaid
+    # classDiagram''' +dataProperties+'''
+    # ```
+    # ''')
+    # print(output)
+    # f = open("diagram4.md", "w")
+    # f.write(output)
+    # f.close()
+
+if __name__ == "__main__":
+    workflow(sys.argv[1], sys.argv[2])

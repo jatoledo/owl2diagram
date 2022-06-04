@@ -16,13 +16,15 @@ class "{{ element }}" {
 {% endfor %}
 
 """
+
 # class with data property
-hierarchyClass ="""
+hierarchyClass = """
     {% for key, value in elements.items() %}
     {{ value }} <|-- {{ key }} 
     {% endfor %}
 """
-hierarchyClass2 ="""
+
+hierarchyClass2 = """
     {% for key, value in elements.items() %}
     "{{ value }}" <|-- "{{ key }}" 
     {% endfor %}
