@@ -1,5 +1,0 @@
-DC = "http://purl.org/dc/elements/1.1/"
-DCTERMS = "http://purl.org/dc/terms/"
-SCHEMA = "http://schema.org/"
-RDFS = "https://www.w3.org/2000/01/rdf-schema#"
-SKOS = "http://www.w3.org/2004/02/skos/core#"
