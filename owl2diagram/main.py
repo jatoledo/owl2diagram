@@ -2,13 +2,22 @@ import sys
 
 import rdflib
 from jinja2 import Template
-from query import class_query, hierarchy_query, dataProp_query, objectProp_query
-from uml import class_, hierarchyClass, dataProperties, objectProperties
+try:
+    from query import class_query, hierarchy_query, dataProp_query, objectProp_query
+except:
+    from owl2diagram.query import class_query, hierarchy_query, dataProp_query, objectProp_query
+try:
+    from uml import class_, hierarchyClass, dataProperties, objectProperties
+except:
+    from owl2diagram.uml import class_, hierarchyClass, dataProperties, objectProperties, objectPropertiesList
+
 import os
 class_template = Template(class_)
 hierarchyClass_template = Template(hierarchyClass)
 dataProperties_template = Template(dataProperties)
 objectProperties_template = Template(objectProperties)
+
+objectPropertiesList_template = Template(objectPropertiesList)
 
 
 def get_name(url):
@@ -68,7 +77,10 @@ def get_object_prop(g):
 
 
 def get_object_diagram(data):
-    objectProp = objectProperties_template.render(elements=data)
+    if type(data) == dict:
+        objectProp = objectProperties_template.render(elements=data)
+    else:
+        objectProp = objectPropertiesList_template.render(elements=data)
     return objectProp
 
 
@@ -92,9 +104,12 @@ def workflow(ontology_path, output_path):
     g.parse(ontology_path, format=rdflib.util.guess_format(ontology_path))
     class_diagram = get_class_diagram(get_classes(g))
     hierarchy_diagram = get_class_hierarchy_diagram(get_class_hierarchy(g))
+    print("get object prop")
+    print(get_object_prop(g))
     object_diagram = get_object_diagram(get_object_prop(g))
     data_diagram = get_data_diagram(get_data_prop(g))
     save_diagram(class_diagram + hierarchy_diagram + object_diagram + data_diagram, output_path)
+    # save_diagram(class_diagram + object_diagram, output_path)
 
 
 if __name__ == "__main__":
