@@ -93,7 +93,7 @@ def save_diagram(diagram, output_path):
     output += "\tclassDiagram\n"
     output += diagram
     output += "\n```"
-    print(output)
+    # print(output)
     f = open(output_path, 'w')
     f.write(output)
     f.close()
@@ -104,8 +104,8 @@ def workflow(ontology_path, output_path):
     g.parse(ontology_path, format=rdflib.util.guess_format(ontology_path))
     class_diagram = get_class_diagram(get_classes(g))
     hierarchy_diagram = get_class_hierarchy_diagram(get_class_hierarchy(g))
-    print("get object prop")
-    print(get_object_prop(g))
+    # print("get object prop")
+    # print(get_object_prop(g))
     object_diagram = get_object_diagram(get_object_prop(g))
     data_diagram = get_data_diagram(get_data_prop(g))
     save_diagram(class_diagram + hierarchy_diagram + object_diagram + data_diagram, output_path)
