@@ -23,9 +23,14 @@ objectPropertiesList_template = Template(objectPropertiesList)
 def get_name(url):
     a = url.find('#')
     if a > -1:
-        return url.split("#")[-1]
+        name = url.split("#")[-1]
+        # return url.split("#")[-1]
     else:
-        return url.split("/")[-1]
+        name = url.split("/")[-1]
+        # return url.split("/")[-1]
+    for ch in ['-', '_', ':']:
+        name = name.replace(ch, '')
+    return name
 
 
 def get_classes(g):
