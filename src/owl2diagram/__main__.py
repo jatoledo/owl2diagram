@@ -103,7 +103,6 @@ def save_diagram(diagram, output_path):
 
 def workflow(ontology_path, output_path):
     g = rdflib.Graph()
-    print("hi")
     g.parse(ontology_path, format=rdflib.util.guess_format(ontology_path))
     class_diagram = get_class_diagram(get_classes(g))
     hierarchy_diagram = get_class_hierarchy_diagram(get_class_hierarchy(g))
