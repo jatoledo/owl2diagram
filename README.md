@@ -2,7 +2,9 @@
 
 ## How to run locally
 ```
-python 
+
+pip install owl2diagram==0.1.2
+
 ```
 
 ## How to use
