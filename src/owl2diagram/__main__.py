@@ -12,8 +12,8 @@ __email__ = "ja.toledo@upm.es"
 import sys
 import rdflib
 from jinja2 import Template
-from query import class_query, hierarchy_query, dataProp_query, objectProp_query
-from uml import class_, hierarchyClass, dataProperties, objectProperties,objectPropertiesList
+from .query import class_query, hierarchy_query, dataProp_query, objectProp_query
+from .uml import class_, hierarchyClass, dataProperties, objectProperties,objectPropertiesList
 
 class_template = Template(class_)
 hierarchyClass_template = Template(hierarchyClass)
