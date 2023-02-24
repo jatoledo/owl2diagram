@@ -1,24 +1,25 @@
-import sys
+__author__ = "Jhon Toledo"
+__credits__ = ["Jhon Toledo"]
+__copyright__ = "Copyright © 2023 Jhon Toledo"
 
+__license__ = "Apache-2.0"
+__maintainer__ = "Jhon Toledo"
+__email__ = "ja.toledo@upm.es"
+
+
+# __main__.py
+
+import sys
 import rdflib
 from jinja2 import Template
-try:
-    from query import class_query, hierarchy_query, dataProp_query, objectProp_query
-except:
-    from owl2diagram.query import class_query, hierarchy_query, dataProp_query, objectProp_query
-try:
-    from uml import class_, hierarchyClass, dataProperties, objectProperties
-except:
-    from owl2diagram.uml import class_, hierarchyClass, dataProperties, objectProperties, objectPropertiesList
+from query import class_query, hierarchy_query, dataProp_query, objectProp_query
+from uml import class_, hierarchyClass, dataProperties, objectProperties,objectPropertiesList
 
-import os
 class_template = Template(class_)
 hierarchyClass_template = Template(hierarchyClass)
 dataProperties_template = Template(dataProperties)
 objectProperties_template = Template(objectProperties)
-
 objectPropertiesList_template = Template(objectPropertiesList)
-
 
 def get_name(url):
     a = url.find('#')
@@ -31,16 +32,12 @@ def get_name(url):
     for ch in ['-', '_', ':']:
         name = name.replace(ch, '')
     return name
-
-
 def get_classes(g):
     # Get Class
     l = []
     for r in g.query(class_query):
         l.append(get_name(r["class"]))
     return l
-
-
 def get_class_diagram(classes):
     class_diagram = class_template.render(elements=classes)
     return class_diagram
@@ -106,6 +103,7 @@ def save_diagram(diagram, output_path):
 
 def workflow(ontology_path, output_path):
     g = rdflib.Graph()
+    print("hi")
     g.parse(ontology_path, format=rdflib.util.guess_format(ontology_path))
     class_diagram = get_class_diagram(get_classes(g))
     hierarchy_diagram = get_class_hierarchy_diagram(get_class_hierarchy(g))
@@ -113,9 +111,13 @@ def workflow(ontology_path, output_path):
     # print(get_object_prop(g))
     object_diagram = get_object_diagram(get_object_prop(g))
     data_diagram = get_data_diagram(get_data_prop(g))
+
+    #print(class_diagram)
     save_diagram(class_diagram + hierarchy_diagram + object_diagram + data_diagram, output_path)
     # save_diagram(class_diagram + object_diagram, output_path)
-
+def main():
+    """Generate a diagram of a given ontology"""
+    workflow(sys.argv[1], sys.argv[2])
 
 if __name__ == "__main__":
-    workflow(sys.argv[1], sys.argv[2])
+    main()
