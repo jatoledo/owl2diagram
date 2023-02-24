@@ -9,7 +9,7 @@ History = 'https://github.com/jatoledo/owl2diagram/releases'
 
 [project]
 name = "owl2diagram"
-version = "0.1.1"
+version = "0.1.2"
 description = "Generate a diagram of a given ontology"
 readme = "README.md"
 authors = [{ name = "Jhon Toledo", email = "ja.toledo@upm.es" }]
