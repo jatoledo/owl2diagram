@@ -1,8 +1,8 @@
 # Owl2diagram
 
-Owl2diagram is a lightweight Python tool that transforms OWL ontologies into Mermaid class diagrams. It helps users quickly visualize the structure of an ontology by extracting classes, subclass relations, datatype properties, and object properties, and rendering them as a diagram that can be easily embedded in Markdown documentation, GitHub pages, or technical reports.
+Owl2diagram is a lightweight Python tool that automatically generates Markdown documentation with embedded Mermaid class diagrams from OWL ontologies. It extracts classes, subclass relations, datatype properties, and object properties to produce a ready-to-use visualization of the ontology structure.
 
-The tool is especially useful for ontology engineers, knowledge graph engineers, and researchers who want a simple way to inspect and communicate ontology structures.
+The tool is especially useful for ontology engineers, knowledge graph engineers, and researchers who want a simple way to inspect  ontology structures.
 
 ## How to run locally
 
